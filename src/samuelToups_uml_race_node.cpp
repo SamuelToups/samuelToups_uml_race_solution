@@ -22,19 +22,33 @@ void movementCallback(const sensor_msgs::LaserScan::ConstPtr& msg)
 //    {
 //
 //    }
-  int i = 0;
-  while (msg->ranges[i] != msg->range_max)
+//  int i = 0;
+//  while (msg->ranges[i] != msg->range_max)
+//  {
+//    i++;
+//  }
+
+  int max_index = 0;
+  int index = 0;
+  float max_range = 0;
+  float angle = msg->angle_min;
+  for (float i = msg->angle_min; i < msg->angle_max; i+=msg->angle_increment)
   {
-    i++;
+    if (i > max_range)
+    {
+      i = max_range;
+      max_index = index;
+    }
+    index++;
   }
 
 //  double rotate_amount = msg->angle_min + i*msg->angle_increment;
   double rotate_amount;
-  if ((msg->angle_min + i*msg->angle_increment) <= -20)
+  if ((msg->angle_min + max_index*msg->angle_increment) <= -20)
   {
     rotate_amount = -200;
   }
-  else if ((msg->angle_min + i*msg->angle_increment) > 20)
+  else if ((msg->angle_min + max_index*msg->angle_increment) > 20)
   {
     rotate_amount = 0;
   }
