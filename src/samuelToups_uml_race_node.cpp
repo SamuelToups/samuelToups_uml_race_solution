@@ -75,28 +75,35 @@ void movementCallback(const sensor_msgs::LaserScan::ConstPtr& msg)
   move_linear.x = 5;
 
   double rotate_amount = 0;
-/*  if (msg->ranges[(int ((msg->angle_max - msg->angle_min) / msg->angle_increment) / 2)] > msg->range_max * .8)
+  if (msg->ranges[(int ((msg->angle_max - msg->angle_min) / msg->angle_increment) / 2)] > msg->range_max * .6)
   {
-    rotate_amount = 0;
+    if (msg->ranges[(int ((msg->angle_max - msg->angle_min) / msg->angle_increment) / 2) - 50] < msg->range_max / 3)
+    {
+      rotate_amount = 12800;
+    }
+    else
+    {
+      rotate_amount = -12800;
+    }
   }
-  else*/ if (msg->ranges[(int ((msg->angle_max - msg->angle_min) / msg->angle_increment) / 2) + 50] < msg->range_max / 3)
+  else if (msg->ranges[(int ((msg->angle_max - msg->angle_min) / msg->angle_increment) / 2) + 50] < msg->range_max / 3)
   {
-    rotate_amount = -3200;
-    move_linear.x = 1;
+    rotate_amount = -12800;
+    move_linear.x = 2;
 
   }
   else if (msg->ranges[(int ((msg->angle_max - msg->angle_min) / msg->angle_increment) / 2) - 50] < msg->range_max / 3)
   {
-    rotate_amount = 3200;
-    move_linear.x = 1;
+    rotate_amount = 12800;
+    move_linear.x = 2;
   }
   else if (msg->ranges[0] < msg->range_max / 3)
   {
-    rotate_amount = 1600;
+    rotate_amount = 12800;
   }
   else if (msg->ranges[(int (msg->angle_max - msg->angle_min / msg->angle_increment))] < msg->range_max / 3)
   {
-    rotate_amount = -1600;
+    rotate_amount = -12800;
   }
 
 
